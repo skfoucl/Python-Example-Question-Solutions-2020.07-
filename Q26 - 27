@@ -1,0 +1,41 @@
+#26
+#read a DNA sequence file of FASTA format
+f = open("BRCA2_DNA.fasta")
+
+print ('BRCA2_DNA.fasta file was loaded!')
+
+seq =[]
+for i in f:
+    if i[0] == ">":
+        pass #first line
+    else:
+        seq.append(i.rstrip())
+
+seq_cut = ("".join(seq))#extract sequence only
+
+n = 3 #print 3 bases in each line
+seq_list = ([seq_cut[l:l+n] for l in range (0, len(seq_cut), n)])
+
+for x in seq_list:
+    print(x)
+
+#27
+##read a DNA sequence file of FASTA format
+f = open("BRCA2_DNA.fasta")
+
+print ('BRCA2_DNA.fasta file was loaded!')
+
+seq =[]
+for i in f:
+    if i[0] == ">":
+        pass #first line
+    else:
+        seq.append(i.rstrip())
+
+seq_cut = ("".join(seq))#extract sequence only
+
+n = 60 #print 60 bases in each line
+seq_list = ([seq_cut[l:l+n] for l in range (0, len(seq_cut), n)])
+
+for x in seq_list:
+    print(x)
