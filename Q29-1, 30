@@ -1,0 +1,45 @@
+#29-1
+## open DNA GB file
+
+f = open("sequence_DNA.gb")
+print ('sequence_DNA.gp file was loaded!')
+
+seq1 = f.read()
+slist = seq1.split()
+
+##find CDS and read CDS position number range
+
+CDSposition = slist[slist.index('CDS') + 1]
+CDSpos = CDSposition.split('..')
+
+
+##extract CDS from sequence + remove numbers + capitalised
+
+CDS2 = slist[slist.index('ORIGIN') + 1 : len(slist) - 1]
+CDS = "".join(CDS2)
+CDSnum = ''.join([i for i in CDS if not i.isdigit()])
+CDSbig = CDSnum.upper()
+
+##print CDS position + CDS
+
+print ('CDS position at ' + CDSposition + ':',CDSbig[int(CDSpos[0]) - 1 :int(CDSpos[1])])
+
+
+## Save as separate file - sequence_DNA_CDS.gb
+
+y = open('sequence_DNA_CDS.gb','w')
+print (CDSbig[int(CDSpos[0]) - 1 :int(CDSpos[1])], file = y)
+y.close()
+
+f.close()
+
+
+#30
+print ('Enter, 10 number. seperator will be comma(,) or white-space()2,3,1,5,3,4,1,2,5,123')
+
+number = [2,3,1,5,3,4,1,2,5,123];
+
+# ascending sorting
+
+number.sort(reverse=False);
+print(number);
