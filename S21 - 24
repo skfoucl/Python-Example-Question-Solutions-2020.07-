@@ -1,0 +1,79 @@
+#S21.
+s1 = str(input("Enter amino acid code : "))
+
+f = open('BRCA2.fasta')
+title =[]
+seq1 =[]
+for i in f:
+    if i[0] == ">":
+         title.append(i.rstrip())
+    else:
+         seq1.append(i.rstrip())
+
+seq = "".join(seq1)
+
+##Using re.finditer() to find all occurences
+
+import re
+res = [aa.start() for aa in re.finditer(s1, seq)]
+position = str(res)
+print (s1, 'in found at ' + position [1:len(position) -1])
+
+#S22
+##GB format file open
+f = open("sequence.gp")
+
+##Read first line and save as title variable
+title = f.readline()
+print("title variable was defined!")
+
+##Convert GB file to a list
+seq1 = f.read()
+list = seq1.split()
+
+##Extract sequence from the list
+#print(list)
+seq2 = list[list.index('ORIGIN') + 1 : len(list) - 1]
+
+##Join list to a string
+seq = "".join(seq2)
+
+print("seq variable was defined!")
+
+#23
+##Alphabets only, remove numbers and convert to big letters
+##seq variable
+f = open("sequence.gp")
+title = f.readline()
+seq1 = f.read()
+list = seq1.split()
+
+seq2 = list[list.index('ORIGIN') + 1 : len(list) - 1]
+seq = "".join(seq2)
+
+##remove number
+
+seqnum = ''.join([i for i in seq if not i.isdigit()])
+#print (seqnum)
+
+##small->capital
+
+seqbig = seqnum.upper()
+print (seqbig)
+
+#24
+f = open("sequence.gp")
+title = f.readline()
+seq1 = f.read()
+slist = seq1.split()
+seq2 = slist[slist.index('ORIGIN') + 1 : len(slist) - 1]
+seq = "".join(seq2)
+seqnum = ''.join([i for i in seq if not i.isdigit()])
+
+seqbig = seqnum.upper()
+
+#print 10 aa in each line (formatting)
+n = 10
+seq_list = ([seqbig[l:l+n] for l in range (0, len(seqbig), n)])
+for x in seq_list:
+    print(x)
