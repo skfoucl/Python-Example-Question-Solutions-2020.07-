@@ -1,0 +1,53 @@
+#16
+f = open("BRCA2.fasta")
+print(f.read())
+f.close()
+
+#17
+save_text=open('seq2.txt','w')
+f = open("BRCA2.fasta")
+save_text.write(f.read())
+save_text.close()
+f.close()
+
+#18
+f = open('seq2.txt')
+fline = f.readline()
+print('The second word is '+fline.split ('|')[1])
+
+#19
+f = open('BRCA2.fasta')
+title =[]
+seq =[]
+for i in f:
+    if i[0] == ">":
+        title.append(i.rstrip())
+    else:
+        seq.append(i.rstrip())
+
+print(title[0])
+print("".join(seq))
+
+
+#S20
+while True:
+    f = open('BRCA2.fasta')
+    title =[]
+    seq1 =[]
+    for i in f:
+        if i[0] == ">":
+            title.append(i.rstrip())
+        else:
+            seq1.append(i.rstrip())
+
+    seq = "".join(seq1)
+
+    s1 = int(input("Enter the position : "))
+
+    print (str(seq[(s1-1):(s1+2)]))
+
+    s1 = str(input("Enter the position : "))
+
+
+    if s1 == "xxx":
+        break
