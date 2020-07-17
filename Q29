@@ -1,0 +1,422 @@
+#29
+#NOTE :  28번과 같은 script를 썼으나, 1. seq_codon = ([seq_cut[l:l+n] for l in range (a, len(seq_cut), n)]) ## reading
+frame 1의 경우 a= 0, reading frame 2의 경우 a = 1, reading frame 3의 경우 a= 2을 사용하였다. 2. Reverse complementary 
+reading frame의 경우 먼저 DNA sequence를 reverse 해 주었으며 (seq_rev = ''.join(reversed(seq_cut))), 똑같이 a의 값을
+frame 1-3에 맞게 바꾸어주었다 (seq_codon = ([seq_rev[l:l+n] for l in range (a, len(seq_rev), n)])).
+
+##Define standard codon table
+
+AAs = {'ATT':'I',   'ATC':'I',  'ATA':'I',  'CTT':'L',  'CTC':'L',
+'CTA':'L',  'CTG':'L',  'TTA':'L',  'TTG':'L',  'GTT':'V',  'GTC':'V',
+'GTA':'V',  'GTG':'V',  'TTT':'F',  'TTC':'F',  'ATG':'M',  'TGT':'C',
+'TGC':'C',  'GCT':'A',  'GCC':'A',  'GCA':'A',  'GCG':'A',  'GGT':'G',
+'GGC':'G',  'GGA':'G',  'GGG':'G',  'CCT':'P',  'CCC':'P',  'CCA':'P',
+'CCG':'P',  'ACT':'T',  'ACC':'T',  'ACA':'T',  'ACG':'T',  'TCT':'S',
+'TCC':'S',  'TCA':'S',  'TCG':'S',  'AGT':'S',  'AGC':'S',  'TAT':'Y',
+'TAC':'Y',  'TGG':'W',  'CAA':'Q',  'CAG':'Q',  'AAT':'N',  'AAC':'N',
+'CAT':'H',  'CAC':'H',  'GAA':'E',  'GAG':'E',  'GAT':'D',  'GAC':'D',
+'AAA':'K',  'AAG':'K',  'CGT':'R',  'CGC':'R',  'CGA':'R',  'CGG':'R',
+'AGA':'R',  'AGG':'R',  'TAA':'_',  'TAG':'_',  'TGA':'_'}
+
+##read a DNA sequence file of FASTA format
+f = open("BRCA2_DNA.fasta")
+print ('BRCA2_DNA.fasta file was loaded!')
+
+##extract sequence from the file
+seq =[]
+for i in f:
+    if i[0] == ">":
+        pass #first line
+    else:
+        seq.append(i.rstrip())
+
+seq_cut = ("".join(seq))#extracted DNA sequence only in string format
+
+
+
+## Reading frame 1
+## get codon (3 bases) from extracted sequence ###Turning point, link column of codon with corresponding aa? is it possible?
+
+n = 3
+seq_codon = ([seq_cut[l:l+n] for l in range (0, len(seq_cut), n)]) ##codon list
+
+
+## call amino acid using codon as a 'key' from AAs dictionary
+
+seqaa = [] #aa list
+
+for z in range(0,len(seq_codon)):
+    x = AAs.get(seq_codon[z])
+    seqaa.append(x)
+
+## remove NONE value from aa list so aa string can be made
+
+seqaa_res = list(filter(None, seqaa))
+
+
+##Join aa list to produce aa string
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+
+## format 60 bases in each line
+
+seq_cut = ("".join(seq))#extracted DNA sequence only in string format
+
+n = 60
+seq_60 = ([seq_cut[l:l+n] for l in range (0, len(seq_cut), n)]) #list
+
+
+## add double spacing to aa list
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+seqaa_spacing = ' ' + ('  '.join(seqaa_str[s:s+1] for s in range(0, len(seqaa_str), 1)))
+
+
+#### format 20 aa in each line
+
+n = 60
+seq_aa60 = ([seqaa_spacing[l:l+n] for l in range (0, len(seqaa_spacing), n)]) #list
+
+##option 1 - merge 60baselist and 20aalist
+
+def countList(seq_60, seq_aa60):
+    return [sub[item] for item in range(len(seq_aa60))
+                      for sub in [seq_60, seq_aa60]]
+
+seq_merge = countList(seq_60, seq_aa60)
+
+print ("\n"+"Reading frame 1:")
+
+for a in seq_merge:
+    print (a)
+
+
+####Reading frame 2
+## get codon (3 bases) from extracted sequence ###Turning point, link column of codon with corresponding aa? is it possible?
+
+n = 3
+seq_codon = ([seq_cut[l:l+n] for l in range (1, len(seq_cut), n)]) ##codon list
+
+
+## call amino acid using codon as a 'key' from AAs dictionary
+
+seqaa = [] #aa list
+
+for z in range(0,len(seq_codon)):
+    x = AAs.get(seq_codon[z])
+    seqaa.append(x)
+
+## remove NONE value from aa list so aa string can be made
+
+seqaa_res = list(filter(None, seqaa))
+
+
+##Join aa list to produce aa string
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+
+## format 60 bases in each line
+
+seq_cut = ("".join(seq))#extracted DNA sequence only in string format
+
+n = 60
+seq_60 = ([seq_cut[l:l+n] for l in range (0, len(seq_cut), n)]) #list
+
+
+## add double spacing to aa list
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+seqaa_spacing = ' ' + ('  '.join(seqaa_str[s:s+1] for s in range(0, len(seqaa_str), 1)))
+
+
+#### format 20 aa in each line
+
+n = 60
+seq_aa60 = ([seqaa_spacing[l:l+n] for l in range (0, len(seqaa_spacing), n)]) #list
+
+##option 1 - merge 60baselist and 20aalist
+
+def countList(seq_60, seq_aa60):
+    return [sub[item] for item in range(len(seq_aa60))
+                      for sub in [seq_60, seq_aa60]]
+
+seq_merge = countList(seq_60, seq_aa60)
+
+seq_merge = countList(seq_60, seq_aa60)
+
+print ("\n"+ "Reading frame 2:")
+
+for a in seq_merge:
+    print (a)
+
+
+####Reading frame 3
+## get codon (3 bases) from extracted sequence ###Turning point, link column of codon with corresponding aa? is it possible?
+
+n = 3
+seq_codon = ([seq_cut[l:l+n] for l in range (2, len(seq_cut), n)]) ##codon list
+
+
+## call amino acid using codon as a 'key' from AAs dictionary
+
+seqaa = [] #aa list
+
+for z in range(0,len(seq_codon)):
+    x = AAs.get(seq_codon[z])
+    seqaa.append(x)
+
+## remove NONE value from aa list so aa string can be made
+
+seqaa_res = list(filter(None, seqaa))
+
+
+##Join aa list to produce aa string
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+
+## format 60 bases in each line
+
+seq_cut = ("".join(seq))#extracted DNA sequence only in string format
+
+n = 60
+seq_60 = ([seq_cut[l:l+n] for l in range (0, len(seq_cut), n)]) #list
+
+
+## add double spacing to aa list
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+seqaa_spacing = ' ' + ('  '.join(seqaa_str[s:s+1] for s in range(0, len(seqaa_str), 1)))
+
+
+#### format 20 aa in each line
+
+n = 60
+seq_aa60 = ([seqaa_spacing[l:l+n] for l in range (0, len(seqaa_spacing), n)]) #list
+
+##option 1 - merge 60baselist and 20aalist
+
+def countList(seq_60, seq_aa60):
+    return [sub[item] for item in range(len(seq_aa60))
+                      for sub in [seq_60, seq_aa60]]
+
+seq_merge = countList(seq_60, seq_aa60)
+
+seq_merge = countList(seq_60, seq_aa60)
+
+print ("\n"+"Reading frame 3:")
+
+for a in seq_merge:
+    print (a)
+
+
+
+
+####Reverse complementary Reading frame 1
+
+## Reverse base sequence
+
+seq_rev = ''.join(reversed(seq_cut))
+
+
+## get codon (3 bases) from extracted sequence ###Turning point, link column of codon with corresponding aa? is it possible?
+
+
+n = 3
+seq_codon = ([seq_rev[l:l+n] for l in range (0, len(seq_rev), n)]) ##codon list
+
+
+## call amino acid using codon as a 'key' from AAs dictionary
+
+seqaa = [] #aa list
+
+for z in range(0,len(seq_codon)):
+    x = AAs.get(seq_codon[z])
+    seqaa.append(x)
+
+## remove NONE value from aa list so aa string can be made
+
+seqaa_res = list(filter(None, seqaa))
+
+
+##Join aa list to produce aa string
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+
+## format 60 bases in each line
+
+seq_cut = ("".join(seq))#extracted DNA sequence only in string format
+
+n = 60
+seq_60 = ([seq_rev[l:l+n] for l in range (0, len(seq_rev), n)]) #list
+
+
+## add double spacing to aa list
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+seqaa_spacing = ' ' + ('  '.join(seqaa_str[s:s+1] for s in range(0, len(seqaa_str), 1)))
+
+
+#### format 20 aa in each line
+
+n = 60
+seq_aa60 = ([seqaa_spacing[l:l+n] for l in range (0, len(seqaa_spacing), n)]) #list
+
+##option 1 - merge 60baselist and 20aalist
+
+def countList(seq_60, seq_aa60):
+    return [sub[item] for item in range(len(seq_aa60))
+                      for sub in [seq_60, seq_aa60]]
+
+seq_merge = countList(seq_60, seq_aa60)
+
+seq_merge = countList(seq_60, seq_aa60)
+
+print ("\n"+"Reverse complementary reading frame 1:")
+
+for a in seq_merge:
+    print (a)
+
+
+####Reverse complementary Reading frame 2
+
+## Reverse base sequence
+
+seq_rev = ''.join(reversed(seq_cut))
+
+
+## get codon (3 bases) from extracted sequence ###Turning point, link column of codon with corresponding aa? is it possible?
+
+
+n = 3
+seq_codon = ([seq_rev[l:l+n] for l in range (1, len(seq_rev), n)]) ##codon list
+
+
+## call amino acid using codon as a 'key' from AAs dictionary
+
+seqaa = [] #aa list
+
+for z in range(0,len(seq_codon)):
+    x = AAs.get(seq_codon[z])
+    seqaa.append(x)
+
+## remove NONE value from aa list so aa string can be made
+
+seqaa_res = list(filter(None, seqaa))
+
+
+##Join aa list to produce aa string
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+
+## format 60 bases in each line
+
+seq_cut = ("".join(seq))#extracted DNA sequence only in string format
+
+n = 60
+seq_60 = ([seq_rev[l:l+n] for l in range (1, len(seq_rev), n)]) #list
+
+
+## add double spacing to aa list
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+seqaa_spacing = ' ' + ('  '.join(seqaa_str[s:s+1] for s in range(0, len(seqaa_str), 1)))
+
+
+#### format 20 aa in each line
+
+n = 60
+seq_aa60 = ([seqaa_spacing[l:l+n] for l in range (0, len(seqaa_spacing), n)]) #list
+
+##option 1 - merge 60baselist and 20aalist
+
+def countList(seq_60, seq_aa60):
+    return [sub[item] for item in range(len(seq_aa60))
+                      for sub in [seq_60, seq_aa60]]
+
+seq_merge = countList(seq_60, seq_aa60)
+
+seq_merge = countList(seq_60, seq_aa60)
+
+print ("\n"+"Reverse complementary reading frame 2:")
+
+for a in seq_merge:
+    print (a)
+
+
+    ####Reverse complementary Reading frame 3
+
+## Reverse base sequence
+
+seq_rev = ''.join(reversed(seq_cut))
+
+
+## get codon (3 bases) from extracted sequence ###Turning point, link column of codon with corresponding aa? is it possible?
+
+
+n = 3
+seq_codon = ([seq_rev[l:l+n] for l in range (2, len(seq_rev), n)]) ##codon list
+
+
+## call amino acid using codon as a 'key' from AAs dictionary
+
+seqaa = [] #aa list
+
+for z in range(0,len(seq_codon)):
+    x = AAs.get(seq_codon[z])
+    seqaa.append(x)
+
+## remove NONE value from aa list so aa string can be made
+
+seqaa_res = list(filter(None, seqaa))
+
+
+##Join aa list to produce aa string
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+
+## format 60 bases in each line
+
+seq_cut = ("".join(seq))#extracted DNA sequence only in string format
+
+n = 60
+seq_60 = ([seq_rev[l:l+n] for l in range (2, len(seq_rev), n)]) #list
+
+
+## add double spacing to aa list
+
+seqaa_str = ("".join(seqaa_res)) # aa string
+
+seqaa_spacing = ' ' + ('  '.join(seqaa_str[s:s+1] for s in range(0, len(seqaa_str), 1)))
+
+
+#### format 20 aa in each line
+
+n = 60
+seq_aa60 = ([seqaa_spacing[l:l+n] for l in range (0, len(seqaa_spacing), n)]) #list
+
+##option 1 - merge 60baselist and 20aalist
+
+def countList(seq_60, seq_aa60):
+    return [sub[item] for item in range(len(seq_aa60))
+                      for sub in [seq_60, seq_aa60]]
+
+seq_merge = countList(seq_60, seq_aa60)
+
+seq_merge = countList(seq_60, seq_aa60)
+
+print ("\n"+"Reverse complementary reading frame 3:")
+
+for a in seq_merge:
+    print (a)
+
