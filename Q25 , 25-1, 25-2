@@ -1,0 +1,238 @@
+
+#25
+##user interface title with input, output file and option number
+
+s1 = str(input("Enter raw_input file: "))
+s2 = str(input("Enter output file: "))
+
+print ( " Option-1) read a FASTA format DNA sequence file and make a reverse sequence file & print \n","Option-2)From Option-1, make reverse complement sequence. A->T, T->A, G->C, C->G, N->N \n")
+print ( ' Option-3) Convert GenBank format file into FASTA format. Print begins with ">" \n')
+
+s3 = int(input("Enter the option number: "))
+
+##option 3 selected (e.g. sequence.gp and sequence_reC.gp)
+
+##title
+
+if s3 == 3:
+    print ( ' Option-3) Convert GenBank format file into FASTA format. Print begins with ">" \n')
+
+    f = open(s1,'r')
+
+    title = f.readline()
+
+    title_dup= " ".join(title.split()) #remove duplicated spaces
+
+    title_new = str('>') + title_dup.replace(' ', '|') + '|'
+
+    #print (title_new)
+
+    ## sequence only
+
+    seq1 = f.read()
+    slist = seq1.split()
+
+    seq2 = slist[slist.index('ORIGIN') + 1 : len(slist) - 1]
+    seq = "".join(seq2)
+
+    ##remove number
+
+    seqnum = ''.join([i for i in seq if not i.isdigit()])
+    #print (seqnum)
+
+    ##small->capital
+
+    seqbig = seqnum.upper()## final extracted sequence
+    #print (seqbig)
+
+
+    ## join Title + extracted equence
+
+    Final = str(title_new) +'\n'+ seqbig
+
+    print (Final)
+
+    ##completion
+
+    y = open(s2,'w')
+    print (Final, file = y)
+    y.close()
+
+    print( s2 ,'is created!')
+
+elif s3 == 1:
+    print ( ' Option-1) read a FASTA format DNA sequence file and make a reverse sequence file & print')
+
+    ##option 1 selected (e.g. BRCA2_DNA.fasta and BRCA2_DNA_rev.fasta)
+
+    ##title
+
+    ##read FASTA format DNA sequence file
+
+    z = open(s1,'r')
+
+    fasta_title =[]
+    fasta_seq =[]
+    for i in z:
+        if i[0] == ">":
+            fasta_title.append(i.rstrip())
+        else:
+            fasta_seq.append(i.rstrip())
+
+    ##print(fasta_title[0])
+
+    finfastaseq = "".join(fasta_seq)
+
+
+    ## make a reverse sequence file & print
+
+
+    finfastaseq_reverse = ''
+
+    for char in finfastaseq:
+        finfastaseq_reverse = char + finfastaseq_reverse
+
+    print (finfastaseq_reverse)
+
+    ##completion
+    fastafinal = str(fasta_title[0]) +'\n'+ finfastaseq_reverse
+
+    print (fastafinal)
+
+    z = open(s2,'w')
+    print (fastafinal, file = z)
+    z.close()
+
+elif s3 == 2:
+    print ( 'Option-2)From Option-1, make reverse complement sequence. A->T, T->A, G->C, C->G, N->N')
+
+    ##option 2 selected (e.g. BRCA2_DNA.fasta and BRCA2_DNA_revcom.fasta)
+
+    ##title
+
+    ##read FASTA format DNA sequence file
+
+    q = open(s1,'r')
+
+    fasta_title =[]
+    fasta_seq =[]
+    for i in q:
+        if i[0] == ">":
+            fasta_title.append(i.rstrip())
+        else:
+            fasta_seq.append(i.rstrip())
+
+    ##print(fasta_title[0])
+
+    finfastaseq = "".join(fasta_seq)
+
+
+    ## make a reverse complement sequence file & print
+
+    ##reverse
+
+
+    finfastaseq_reverse = ''
+
+    for char in finfastaseq:
+        finfastaseq_reverse = char + finfastaseq_reverse
+
+
+    ##reverse complement
+
+    def complement(seqf):
+        complement = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G', 'N': 'N'}
+        bases = list(seqf)
+        bases = [complement[base] for base in bases]
+        return ''.join(bases)
+
+    ##completion
+    fastafinalrc = str(fasta_title[0]) +'\n'+ complement(finfastaseq_reverse)
+
+    print (fastafinalrc)
+
+    w = open(s2,'w')
+    print (fastafinalrc, file = w)
+    w.close()
+
+#25.1
+##load GeneBank file
+
+print ( 'sequence.gp file was loaded!')
+f = open('sequence.gp','r')
+
+##extract title
+
+title = f.readline()
+title_dup= " ".join(title.split()) #remove duplicated spaces
+title_new = title_dup.replace(' ', '|')
+
+##extract Sequence only
+
+seq1 = f.read()
+slist = seq1.split()
+seq2 = slist[slist.index('ORIGIN') + 1 : len(slist) - 1]
+seq = "".join(seq2)
+
+##remove number
+
+seqnum = ''.join([i for i in seq if not i.isdigit()])
+
+##small->capital
+
+seqbig = seqnum.upper()## final extracted sequence
+
+##extract Organism
+
+org = slist[slist.index('ORGANISM') + 1 : slist.index('ORGANISM') + 3]
+orgj = " ".join(org)
+
+##competion
+##join
+
+print ('Title :' + title_new + '\n' + 'Organism :' + orgj + '\n' + 'Sequence is :' + '\n' + seqbig)
+
+#25-2
+
+##load Multiple GeneBank file
+import os
+import glob
+
+print ( 'All have gp extension files were loaded!')
+
+os.chdir("/Users/com/Desktop/Narae Lee/25_2") # 2 sample gp files are in 25_2 folder
+
+for x in os.listdir("/Users/com/Desktop/Narae Lee/25_2"):
+
+    f = open(x,'r')
+
+    ## extract title
+    title = f.readline()
+
+    title_dup= " ".join(title.split()) #remove duplicated spaces
+
+    title_new = title_dup.replace(' ', '|')
+
+    ## extract Sequence only
+
+    seq1 = f.read()
+    slist = seq1.split()
+    seq2 = slist[slist.index('ORIGIN') + 1 : len(slist) - 1]
+    seq = "".join(seq2)
+
+    ##remove number
+    seqnum = ''.join([i for i in seq if not i.isdigit()])
+        #print (seqnum)
+
+    ##small->capital
+    seqbig = seqnum.upper()## final extracted sequence
+
+    ## extract Organism
+
+    org = slist[slist.index('ORGANISM') + 1 : slist.index('ORGANISM') + 3]
+    orgj = " ".join(org)
+
+    ##competion
+    ##join
+
+    print ('Title :' + title_new + '\n' + 'Organism :' + orgj + '\n' + 'Sequence is :' + '\n' + seqbig + '\n')
