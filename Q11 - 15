@@ -1,0 +1,49 @@
+#11
+s1 = str(input("Enter, string_1 : "))
+s2 = str(input("Enter, string_2 : "))
+
+if len(s1) < len(s2) and len(s1)%2==1:#odd
+    print (s1 + s2)
+else:
+    print (s2 + s1)
+
+#12
+s1 = str(input("Enter, string : "))
+
+s1_reverse = ''
+
+for char in s1:
+    s1_reverse = char + s1_reverse
+
+print (s1_reverse)
+
+#12 alternative
+
+s1 = str(input("Enter, string : "))
+print(''.join(reversed(s1)))
+
+#13
+AAs = {}
+s1 = str(input("Enter, codon : "))
+s2 = str(input("Enter, One letter Amino acid name corresponding to the codon : "))
+
+AAs[s1] = s2
+
+s3 = str(input("Enter, codon : "))
+
+if s3 == str('xxx'):
+    s4 = str(input("Enter, codon to translate into amino acid letter : "))
+    AA = AAs.get(s4)
+    print(AA)
+
+#14
+f = open('title.txt', 'w')
+f.write('This is a sequence file')
+print('title.txt file is created!')
+f.close()
+
+#15
+f = open("title.txt", 'r')
+MyString = f.readline()
+print('The first line is: '+MyString)
+f.close()
