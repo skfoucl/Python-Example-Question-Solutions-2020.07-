@@ -1,0 +1,68 @@
+#1
+print("This is sequence file")
+
+#2
+x = str(input("Enter a anything you want to print : "))
+print (x)
+
+#3
+a = int(input("Enter, number_1: "))
+b = int(input("Enter, number_2: "))
+c = a + b
+print(c)
+
+#4
+x = int(input("Enter, number_1: "))
+y = int(input("Enter, number_2: "))
+
+if x >y:
+    print (x)
+else:
+    print (y)
+
+#5
+AAs = {"ATG": "M"}
+codon = str(input("Enter, a nucleic acid sequence : "))
+AA = AAs.get(codon)
+print(AA)
+
+#6
+while True:
+    x = int(input("Enter, number_1: "))
+    y = int(input("Enter, number_2: "))
+    if x >y:
+        print (x)
+    else:
+        print (y)
+        check = str(input("Do you want to quit this loop? (Y/N)")).lower().strip()
+        if check[0] == "n":
+            pass
+        if check[0] == "y":
+            break
+
+#7
+y = int(input("Hello, welcome to multiplication test, select the level : "))
+
+print( "multiplication, X",y )
+
+for i in range(2, 9):
+        print( y, 'X', i , '=', y*i )
+
+#8
+x = str(input("Hello, type string you want to know length : "))
+print( len(x) )
+
+#9
+s1 = str(input("Enter, string : "))
+s2 = int(input("Enter, the number you want to duplicate the string : "))
+
+print( s1 * int(s2) )
+
+#10
+s1 = str(input("Enter, string_1 : "))
+s2 = str(input("Enter, string_2 : "))
+
+if s1 == s2:
+    print ("두 문자열이 같다")
+else:
+    print (s1 + s2)
