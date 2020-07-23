@@ -35,11 +35,27 @@ f.close()
 
 
 #30
-print ('Enter, 10 number. seperator will be comma(,) or white-space()2,3,1,5,3,4,1,2,5,123')
 
-number = [2,3,1,5,3,4,1,2,5,123];
+NumList = []
+Number = str(input('Enter, 10 number. seperator will be comma(,) or white-space()'))
 
-# ascending sorting
 
-number.sort(reverse=False);
-print(number);
+#split string input > list
+
+spacing = str(Number[1])
+
+if spacing == ',':
+    nlist = Number.split(spacing)
+    for n in nlist:
+        NumList.append(n)
+    NumList.sort(key=int, reverse=False) #ascending sorting
+    print (NumList)
+
+if spacing == ' ':
+    nlist = Number.split(spacing)
+    for n in nlist:
+        NumList.append(n)
+    NumList.sort(key=int, reverse=False) #ascending sorting
+    print (NumList)
+else:
+    pass
